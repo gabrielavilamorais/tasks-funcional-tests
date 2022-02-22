@@ -2,24 +2,29 @@ package br.ce.wcaquino.tasks.functional;
 
 import static org.junit.Assert.assertEquals;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class TasksTest {
 
-	public WebDriver acessarAplicacao() {
-		WebDriver driver = new ChromeDriver();
-		driver.navigate().to("http://localhost:8001/tasks");
+	public WebDriver acessarAplicacao() throws MalformedURLException {
+		DesiredCapabilities cap = DesiredCapabilities.chrome();
+		
+		WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), cap);
+		driver.navigate().to("http://172.28.112.1:8001/tasks");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		return driver;
 	}
 
 	@Test
-	public void deveSalvarTarefaComSucesso() {
+	public void deveSalvarTarefaComSucesso() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
 
@@ -47,7 +52,7 @@ public class TasksTest {
 	}
 
 	@Test
-	public void naoDeveSalvarTarefaSemDescricao() {
+	public void naoDeveSalvarTarefaSemDescricao() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
 
@@ -71,7 +76,7 @@ public class TasksTest {
 	}
 
 	@Test
-	public void naoDeveSalvarTarefaSemData() {
+	public void naoDeveSalvarTarefaSemData() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
 
@@ -96,7 +101,7 @@ public class TasksTest {
 	}
 
 	@Test
-	public void naoDeveSalvarTarefaComDataPassada() {
+	public void naoDeveSalvarTarefaComDataPassada() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
 
