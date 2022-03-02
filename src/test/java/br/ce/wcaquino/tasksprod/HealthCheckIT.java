@@ -15,7 +15,6 @@ public class HealthCheckIT {
 
 	@Test
 	public void healtheCheck() throws MalformedURLException {
-
 		DesiredCapabilities cap = DesiredCapabilities.chrome();
 		WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), cap);
 		try {
@@ -24,7 +23,8 @@ public class HealthCheckIT {
 			String version = driver.findElement(By.id("version")).getText();
 			Assert.assertTrue(version.startsWith("build"));
 		} finally {
-			driver.quit(); 
+			driver.quit();
+
 		}
 
 	}
